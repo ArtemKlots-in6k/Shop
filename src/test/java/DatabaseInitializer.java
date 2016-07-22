@@ -89,6 +89,6 @@ public class DatabaseInitializer {
 
     private void preparePurchases() throws SQLException {
         statement.executeUpdate("INSERT INTO bills (date, user_id) VALUES ('2016-07-18 12:30:15', 1)");
-
+        statement.executeUpdate("INSERT INTO bills (date, user_id) VALUES ('2016-07-18 11:30:15', 0)");
     }
 }

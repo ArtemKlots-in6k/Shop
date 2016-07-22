@@ -9,15 +9,15 @@ import java.time.LocalDate;
 public class Bill {
     private int id;
     private Date date;
-    private int userId;
+    private User user;
 
-    public Bill(Date date, int userId) {
+    public Bill(Date date, User user) {
         this.date = date;
-        this.userId = userId;
+        this.user = user;
     }
 
-    public Bill(int id, Date date, int userId) {
-        this(date, userId);
+    public Bill(int id, Date date, User user) {
+        this(date, user);
         this.id = id;
     }
 
@@ -33,8 +33,16 @@ public class Bill {
         this.date = date;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
-        return id + " " + date + " " + userId;
+        return "id: " + id + "; date: " + date + "; user name:" + user.getName() + "; user id:" + user.getId();
     }
 }

@@ -50,8 +50,5 @@ public class CategoryDAOTest extends DatabaseInitializer {
         expected.add("Tablets " + 3);
 
         assertThat(expected, is(result));
-
-//        assertThat(result, is());
-
     }
 }

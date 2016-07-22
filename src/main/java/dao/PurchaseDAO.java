@@ -1,6 +1,7 @@
 package dao;
 
 import ConnectionFactory.ConnectionFactoryImpl;
+import entity.Bill;
 import entity.Purchase;
 
 import java.math.BigDecimal;
@@ -38,6 +39,6 @@ public class PurchaseDAO {
         int itemId = result.getInt("item_id");
         BigDecimal price = result.getBigDecimal("price");
         int billId = result.getInt("bill_id");
-        return new Purchase(id, itemId, price, billId);
+        return new Purchase(id, itemId, price, new BillDAO().getBillById(id));
     }
 }

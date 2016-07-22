@@ -9,17 +9,17 @@ public class Purchase {
     private int id;
     private int item_id;
     private BigDecimal price;
-    private int bill_id;
+    private Bill bill;
 
 
-    public Purchase(int item_id, BigDecimal price, int bill_id) {
+    public Purchase(int item_id, BigDecimal price, Bill bill) {
         this.item_id = item_id;
         this.price = price;
-        this.bill_id = bill_id;
+        this.bill = bill;
     }
 
-    public Purchase(int id, int item_id, BigDecimal price, int bill_id) {
-        this(item_id, price, bill_id);
+    public Purchase(int id, int item_id, BigDecimal price, Bill bill) {
+        this(item_id, price, bill);
         this.id = id;
     }
 
@@ -43,17 +43,17 @@ public class Purchase {
         this.price = price;
     }
 
-    public int getBill_id() {
-        return bill_id;
+    public Bill getBill() {
+        return bill;
     }
 
-    public void setBill_id(int bill_id) {
-        this.bill_id = bill_id;
+    public void setBill(Bill bill) {
+        this.bill = bill;
     }
 
     @Override
     public String toString() {
-        return id + " " + item_id + " " + price.toString() + " " + bill_id;
+        return id + " " + item_id + " " + price.toString() + " " + bill;
     }
 
     @Override
@@ -64,6 +64,6 @@ public class Purchase {
 
         return item_id == purchase.item_id
                 && price.equals(purchase.price)
-                && bill_id == purchase.bill_id;
+                && bill == purchase.bill;
     }
 }

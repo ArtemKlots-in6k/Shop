@@ -16,6 +16,13 @@ import java.util.List;
 public class UserDao {
     private Statement statement;
 
+    public User getUserById(int id) throws SQLException {
+        setUpConnection();
+        ResultSet result = statement.executeQuery("SELECT * FROM users WHERE id = " + id + ";");
+        result.next();
+        return parse(result);
+    }
+
     public List<User> getAll() throws SQLException {
         List<User> users = new ArrayList<User>();
         setUpConnection();

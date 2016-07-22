@@ -7,6 +7,9 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+
 /**
  * Created by Artem Klots on 7/22/16.
  */
@@ -24,15 +27,18 @@ public class BillDAOTest extends DatabaseInitializer {
     }
 
     @Test
+    public void getUserById() throws Exception {
+        BillDAO billDAO = new BillDAO();
+
+        Bill expectedBill = billDAO.getBillById(0);
+        assertThat(expectedBill.getId(), is(0));
+    }
+    @Test
     public void getAll() throws Exception {
         BillDAO billDAO = new BillDAO();
 
         List<Bill> expect = new ArrayList<Bill>();
-//        expect.add(new Bill(0, "Robert"));
-//        expect.add(new Bill(1, "John"));
 
-        System.out.println(billDAO.getAll());
-
-//        assertThat(billDAO.getAll(), is(expect));
+        assertThat(billDAO.getAll().size(), is(2));
     }
 }

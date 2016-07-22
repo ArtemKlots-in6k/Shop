@@ -36,4 +36,13 @@ public class UserDAOTest extends DatabaseInitializer {
 
         assertThat(userDao.getAll(), is(expect));
     }
+
+    @Test
+    public void getUserById() throws Exception {
+        UserDao userDao = new UserDao();
+
+        User expectedUser = userDao.getUserById(1);
+
+        assertThat(userDao.getUserById(1).getId(), is(1));
+    }
 }
