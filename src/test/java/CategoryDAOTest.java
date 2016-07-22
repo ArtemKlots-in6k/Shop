@@ -37,8 +37,6 @@ public class CategoryDAOTest extends DatabaseInitializer {
 
     @Test
     public void getAll() throws Exception {
-
-
         List<Category> result = categoryDAO.getAll();
 
         assertThat(result, contains(

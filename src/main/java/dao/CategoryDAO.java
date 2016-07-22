@@ -13,7 +13,6 @@ import java.util.*;
  * Created by Artem Klots on 7/21/16.
  */
 public class CategoryDAO {
-    private Connection connection;
     private Statement statement;
 
     public List<Category> getAll() throws SQLException {
@@ -43,7 +42,7 @@ public class CategoryDAO {
     }
 
     private void setUpConnection() throws SQLException {
-        connection = new ConnectionFactoryImpl().getConnection();
+        Connection connection = new ConnectionFactoryImpl().getConnection();
         statement = connection.createStatement();
     }
 

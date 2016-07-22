@@ -13,13 +13,15 @@ public class DatabaseInitializer {
 
     protected void setUp() throws Exception {
         prepareTables();
-        prepareCategory();
-        prepareItem();
+        prepareCategories();
+        prepareItems();
+        preparePurchases();
     }
 
     protected void tearDown() throws Exception {
         statement.executeUpdate("DROP TABLE items");
         statement.executeUpdate("DROP TABLE categories");
+        statement.executeUpdate("DROP TABLE purchases");
     }
 
     protected void prepareConnection() throws SQLException {
@@ -41,15 +43,21 @@ public class DatabaseInitializer {
         statement.executeUpdate("ALTER TABLE items " +
                 "ADD FOREIGN KEY(category_id) " +
                 "REFERENCES categories(id)");
+
+        statement.executeUpdate("CREATE TABLE purchases (" +
+                "id INT IDENTITY PRIMARY KEY NOT NULL," +
+                "item_id INT NOT NULL," +
+                "price DECIMAL NOT NULL," +
+                "bill_id INT NOT NULL)");
     }
 
-    private void prepareCategory() throws SQLException {
+    private void prepareCategories() throws SQLException {
         statement.executeUpdate("INSERT INTO categories (title) VALUES ('Phone')");
         statement.executeUpdate("INSERT INTO categories (title) VALUES ('Notebook')");
         statement.executeUpdate("INSERT INTO categories (title) VALUES ('Tablets')");
     }
 
-    private void prepareItem() throws SQLException {
+    private void prepareItems() throws SQLException {
 
         statement.executeUpdate("INSERT INTO items (title, category_id, price) VALUES ('iPhone', 0, 700.00)");
         statement.executeUpdate("INSERT INTO items (title, category_id, price) VALUES ('Samsung', 0, 300.50)");
@@ -59,5 +67,9 @@ public class DatabaseInitializer {
         statement.executeUpdate("INSERT INTO items (title, category_id, price) VALUES ('iPad', 2, 500.00)");
         statement.executeUpdate("INSERT INTO items (title, category_id, price) VALUES ('iPad mini', 2, 400.00)");
         statement.executeUpdate("INSERT INTO items (title, category_id, price) VALUES ('Samsung and some text', 2, 300.00)");
+    }
+
+    private void preparePurchases() {
+
     }
 }
