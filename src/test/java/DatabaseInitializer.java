@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * Created by employee on 7/22/16.
+ * Created by Artem Klots on 7/22/16.
  */
 public class DatabaseInitializer {
     Connection connection;
@@ -23,6 +23,7 @@ public class DatabaseInitializer {
         statement.executeUpdate("DROP TABLE items");
         statement.executeUpdate("DROP TABLE categories");
         statement.executeUpdate("DROP TABLE purchases");
+        statement.executeUpdate("DROP TABLE bills");
         statement.executeUpdate("DROP TABLE users");
     }
 
@@ -49,6 +50,12 @@ public class DatabaseInitializer {
         statement.executeUpdate("CREATE TABLE users (" +
                 "id INT IDENTITY PRIMARY KEY NOT NULL," +
                 "name VARCHAR(25) NOT NULL)");
+
+
+        statement.executeUpdate("CREATE TABLE bills (" +
+                "id INT IDENTITY PRIMARY KEY NOT NULL," +
+                "date DATETIME NOT NULL," +
+                "user_id INT NOT NULL)");
 
         statement.executeUpdate("CREATE TABLE purchases (" +
                 "id INT IDENTITY PRIMARY KEY NOT NULL," +
@@ -80,7 +87,8 @@ public class DatabaseInitializer {
         statement.executeUpdate("INSERT INTO users (name) VALUES ('John')");
     }
 
-    private void preparePurchases() {
+    private void preparePurchases() throws SQLException {
+        statement.executeUpdate("INSERT INTO bills (date, user_id) VALUES ('2016-07-18 12:30:15', 1)");
 
     }
 }

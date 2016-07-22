@@ -1,5 +1,6 @@
 package entity;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 /**
@@ -7,15 +8,15 @@ import java.time.LocalDate;
  */
 public class Bill {
     private int id;
-    private LocalDate date;
+    private Date date;
     private int userId;
 
-    public Bill(LocalDate date, int userId) {
+    public Bill(Date date, int userId) {
         this.date = date;
         this.userId = userId;
     }
 
-    public Bill(int id, LocalDate date, int userId) {
+    public Bill(int id, Date date, int userId) {
         this(date, userId);
         this.id = id;
     }
@@ -24,11 +25,11 @@ public class Bill {
         return id;
     }
 
-    public LocalDate getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
