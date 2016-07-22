@@ -1,9 +1,8 @@
 package dao;
 
 import ConnectionFactory.ConnectionFactoryImpl;
-import entity.Purchase;
+import entity.User;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,18 +13,18 @@ import java.util.List;
 /**
  * Created by Artem Klots on 7/22/16.
  */
-public class PurchaseDAO {
+public class UserDao {
     private Statement statement;
 
-    public List<Purchase> getAll() throws SQLException {
-        List<Purchase> purchases = new ArrayList<Purchase>();
+    public List<User> getAll() throws SQLException {
+        List<User> users = new ArrayList<User>();
         setUpConnection();
 
-        ResultSet result = statement.executeQuery("SELECT * FROM purchases");
+        ResultSet result = statement.executeQuery("SELECT * FROM users");
         while (result.next()) {
-            purchases.add(parse(result));
+            users.add(parse(result));
         }
-        return purchases;
+        return users;
     }
 
     private void setUpConnection() throws SQLException {
@@ -33,11 +32,9 @@ public class PurchaseDAO {
         statement = connection.createStatement();
     }
 
-    public Purchase parse(ResultSet result) throws SQLException {
+    public User parse(ResultSet result) throws SQLException {
         int id = result.getInt("id");
-        int itemId = result.getInt("item_id");
-        BigDecimal price = result.getBigDecimal("price");
-        int billId = result.getInt("bill_id");
-        return new Purchase(id, itemId, price, billId);
+        String name = result.getString("name");
+        return new User(id, name);
     }
 }

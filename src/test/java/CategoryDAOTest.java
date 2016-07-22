@@ -1,19 +1,13 @@
-import ConnectionFactory.ConnectionFactoryImpl;
 import dao.CategoryDAO;
 import entity.Category;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.hasEntry;
 import static org.junit.Assert.assertThat;
 
-import java.sql.*;
 import java.util.*;
 
 /**

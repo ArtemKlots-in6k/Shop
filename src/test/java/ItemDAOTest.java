@@ -1,4 +1,3 @@
-import ConnectionFactory.ConnectionFactoryImpl;
 import dao.ItemDAO;
 import entity.Item;
 import org.junit.After;
@@ -6,12 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertThat;
 

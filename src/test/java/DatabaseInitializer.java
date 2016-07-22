@@ -16,12 +16,14 @@ public class DatabaseInitializer {
         prepareCategories();
         prepareItems();
         preparePurchases();
+        prepareUsers();
     }
 
     protected void tearDown() throws Exception {
         statement.executeUpdate("DROP TABLE items");
         statement.executeUpdate("DROP TABLE categories");
         statement.executeUpdate("DROP TABLE purchases");
+        statement.executeUpdate("DROP TABLE users");
     }
 
     protected void prepareConnection() throws SQLException {
@@ -43,6 +45,10 @@ public class DatabaseInitializer {
         statement.executeUpdate("ALTER TABLE items " +
                 "ADD FOREIGN KEY(category_id) " +
                 "REFERENCES categories(id)");
+
+        statement.executeUpdate("CREATE TABLE users (" +
+                "id INT IDENTITY PRIMARY KEY NOT NULL," +
+                "name VARCHAR(25) NOT NULL)");
 
         statement.executeUpdate("CREATE TABLE purchases (" +
                 "id INT IDENTITY PRIMARY KEY NOT NULL," +
@@ -67,6 +73,11 @@ public class DatabaseInitializer {
         statement.executeUpdate("INSERT INTO items (title, category_id, price) VALUES ('iPad', 2, 500.00)");
         statement.executeUpdate("INSERT INTO items (title, category_id, price) VALUES ('iPad mini', 2, 400.00)");
         statement.executeUpdate("INSERT INTO items (title, category_id, price) VALUES ('Samsung and some text', 2, 300.00)");
+    }
+
+    private void prepareUsers() throws SQLException {
+        statement.executeUpdate("INSERT INTO users (name) VALUES ('Robert')");
+        statement.executeUpdate("INSERT INTO users (name) VALUES ('John')");
     }
 
     private void preparePurchases() {
