@@ -8,19 +8,19 @@ import java.math.BigDecimal;
 public class Item {
     private int id;
     private String title;
-    private int category_id;
+    private Category category;
     private BigDecimal price;
 
-    public Item(String title, int category_id, BigDecimal price) {
+    public Item(String title, Category category, BigDecimal price) {
         this.title = title;
-        this.category_id = category_id;
+        this.category = category;
         this.price = price;
     }
 
-    public Item(int id, String title, int category_id, BigDecimal price) {
+    public Item(int id, String title, Category category, BigDecimal price) {
         this.id = id;
         this.title = title;
-        this.category_id = category_id;
+        this.category = category;
         this.price = price;
     }
 
@@ -36,12 +36,12 @@ public class Item {
         return id;
     }
 
-    public int getCategory_id() {
-        return category_id;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategory_id(int category_id) {
-        this.category_id = category_id;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public BigDecimal getPrice() {
@@ -54,7 +54,7 @@ public class Item {
 
     @Override
     public String toString() {
-        return id + " " + title + " " + category_id + " " + price;
+        return id + " " + title + " " + category + " " + price;
     }
 
     @Override
@@ -63,6 +63,6 @@ public class Item {
         if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
 
-        return title.equals(item.title) && category_id == item.category_id && price.equals(item.price);
+        return title.equals(item.title) && category.equals(item.category) && price.equals(item.price);
     }
 }

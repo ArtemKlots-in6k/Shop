@@ -1,4 +1,5 @@
 import dao.ItemDAO;
+import entity.Category;
 import entity.Item;
 import org.junit.After;
 import org.junit.Before;
@@ -40,14 +41,14 @@ public class ItemDAOTest extends DatabaseInitializer {
         List<Item> result = itemDAO.getAll();
 
         assertThat(result, contains(
-                new Item("iPhone", 0, new BigDecimal("700.00")),
-                new Item("Samsung", 0, new BigDecimal("300.50")),
+                new Item("iPhone", new Category(0, "Phone"), new BigDecimal("700.00")),
+                new Item("Samsung", new Category(0, "Phone"), new BigDecimal("300.50")),
 
-                new Item("Lenovo Idea Pad", 1, new BigDecimal("1500.00")),
+                new Item("Lenovo Idea Pad", new Category(1, "Notebook"), new BigDecimal("1500.00")),
 
-                new Item("iPad", 2, new BigDecimal("500.00")),
-                new Item("iPad mini", 2, new BigDecimal("400.00")),
-                new Item("Samsung and some text", 2, new BigDecimal("300.00"))
+                new Item("iPad", new Category(2, "Tablets"), new BigDecimal("500.00")),
+                new Item("iPad mini", new Category(2, "Tablets"), new BigDecimal("400.00")),
+                new Item("Samsung and some text", new Category(2, "Tablets"), new BigDecimal("300.00"))
         ));
     }
 }

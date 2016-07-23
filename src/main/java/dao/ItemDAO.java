@@ -26,7 +26,7 @@ public class ItemDAO {
         String title = result.getString("title");
         int categoryId = result.getInt("category_id");
         BigDecimal price = result.getBigDecimal("price");
-        return new Item(id, title, categoryId, price);
+        return new Item(id, title, new CategoryDAO().getCategoryById(categoryId), price);
     }
 
     public List<Item> getAll() throws SQLException {
@@ -35,11 +35,7 @@ public class ItemDAO {
 
         ResultSet result = statement.executeQuery("SELECT * FROM items ");
         while (result.next()) {
-            int id = result.getInt("id");
-            String title = result.getString("title");
-            int categoryId = result.getInt("category_id");
-            BigDecimal price = result.getBigDecimal("price");
-            items.add(new Item(id, title, categoryId, price));
+            items.add(parse(result));
         }
         return items;
     }
