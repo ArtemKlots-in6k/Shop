@@ -20,6 +20,7 @@ public class BillDAO {
         result.next();
         return parse(result);
     }
+
     public List<Bill> getAll() throws SQLException {
         List<Bill> bills = new ArrayList<Bill>();
         setUpConnection();
@@ -41,5 +42,4 @@ public class BillDAO {
         Date date = result.getDate("date");
         return new Bill(date, new UserDao().getUserById(id));
     }
-
 }

@@ -4,10 +4,7 @@ import ConnectionFactory.ConnectionFactoryImpl;
 import entity.Item;
 
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +13,21 @@ import java.util.List;
  */
 public class ItemDAO {
     private Statement statement;
+
+    public Item getItemById(int id) throws SQLException {
+        setUpConnection();
+        ResultSet result = statement.executeQuery("SELECT * FROM items WHERE id = " + id);
+        result.next();
+        return parse(result);
+    }
+
+    public Item parse(ResultSet result) throws SQLException {
+        int id = result.getInt("id");
+        String title = result.getString("title");
+        int categoryId = result.getInt("category_id");
+        BigDecimal price = result.getBigDecimal("price");
+        return new Item(id, title, categoryId, price);
+    }
 
     public List<Item> getAll() throws SQLException {
         List<Item> items = new ArrayList<Item>();

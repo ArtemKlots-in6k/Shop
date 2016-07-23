@@ -27,7 +27,7 @@ public class BillDAOTest extends DatabaseInitializer {
     }
 
     @Test
-    public void getUserById() throws Exception {
+    public void getBillById() throws Exception {
         BillDAO billDAO = new BillDAO();
 
         Bill expectedBill = billDAO.getBillById(0);

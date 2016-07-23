@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertThat;
 
@@ -14,11 +15,13 @@ import static org.junit.Assert.assertThat;
  * Created by employee on 7/21/16.
  */
 public class ItemDAOTest extends DatabaseInitializer {
+    private ItemDAO itemDAO;
 
     @Before
     public void setUp() throws Exception {
         prepareConnection();
         super.setUp();
+        itemDAO = new ItemDAO();
     }
 
     @After
@@ -28,9 +31,12 @@ public class ItemDAOTest extends DatabaseInitializer {
     }
 
     @Test
-    public void getAll() throws Exception {
-        ItemDAO itemDAO = new ItemDAO();
+    public void gitItemById() throws Exception {
+        assertThat(itemDAO.getItemById(1).getTitle(), is("Samsung"));
+    }
 
+    @Test
+    public void getAll() throws Exception {
         List<Item> result = itemDAO.getAll();
 
         assertThat(result, contains(
