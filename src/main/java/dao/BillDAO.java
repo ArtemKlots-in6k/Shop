@@ -11,8 +11,11 @@ import java.util.*;
 /**
  * Created by Artem Klots on 7/22/16.
  */
-public class BillDAO {
-    private Statement statement;
+public class BillDAO extends DAO {
+
+    public BillDAO() {
+        tableName = "bills";
+    }
 
     public Bill getBillById(int id) throws SQLException {
         setUpConnection();
@@ -36,22 +39,6 @@ public class BillDAO {
             result.put(response.getInt("id"), bill);
         }
         return result;
-    }
-
-    public List<Bill> getAll() throws SQLException {
-        List<Bill> bills = new ArrayList<>();
-        setUpConnection();
-
-        ResultSet result = statement.executeQuery("SELECT * FROM bills");
-        while (result.next()) {
-            bills.add(parse(result));
-        }
-        return bills;
-    }
-
-    private void setUpConnection() throws SQLException {
-        Connection connection = new ConnectionFactoryImpl().getConnection();
-        statement = connection.createStatement();
     }
 
     public Bill parse(ResultSet result) throws SQLException {
