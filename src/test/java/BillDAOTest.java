@@ -37,8 +37,6 @@ public class BillDAOTest extends DatabaseInitializer {
     public void getAll() throws Exception {
         BillDAO billDAO = new BillDAO();
 
-        List<Bill> expect = new ArrayList<Bill>();
-
-        assertThat(billDAO.getAll().size(), is(2));
+        assertThat(billDAO.getAll().size(), is(3));
     }
 }

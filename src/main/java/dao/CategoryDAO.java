@@ -61,17 +61,19 @@ public class CategoryDAO {
         return categories;
     }
 
-    public List<String> getAllCategoriesWithCountedProducts() throws SQLException {
-        List<String> categories = new ArrayList<String>();
+    public Map<Category, Integer> getAllCategoriesWithCountedProducts() throws SQLException {
+        Map<Category, Integer> categories = new LinkedHashMap<>();
         setUpConnection();
         ResultSet result = statement.executeQuery("" +
-                "SELECT categories.id, categories.title, COUNT(category_id) AS numbersOfItems " +
+                "SELECT categories.id, categories.title, COUNT(category_id) AS numberOfItems " +
                 "FROM items, categories " +
                 "WHERE category_id = categories.id " +
                 "GROUP BY categories.id");
 
         while (result.next()) {
-            categories.add(parse(result).getTitle() + " " + result.getInt("numbersOfItems"));
+            int categoryId = result.getInt("id");
+            int numberOfItems = result.getInt("id");
+            categories.put(new CategoryDAO().getCategoryById(categoryId), numberOfItems);
         }
         return categories;
     }

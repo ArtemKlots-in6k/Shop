@@ -31,11 +31,16 @@ public class PurchaseDAOTest extends DatabaseInitializer {
 
     @Test
     public void getAll() throws Exception {
-        assertThat(purchaseDAO.getAll().size(), is(4));
+        assertThat(purchaseDAO.getAll().size(), is(8));
     }
 
     @Test
     public void getPurchaseById() throws Exception {
         assertThat(purchaseDAO.getPurchaseById(1).getId(), is(1));
+    }
+
+    @Test
+    public void getAllPurchasesByBillId() throws Exception {
+        assertThat(purchaseDAO.getAllPurchasesByBillId(0).size(), is(4));
     }
 }

@@ -64,12 +64,12 @@ public class CategoryDAOTest extends DatabaseInitializer {
 
     @Test
     public void getAllCategoriesWithCountedProducts() throws Exception {
-        List<String> result = categoryDAO.getAllCategoriesWithCountedProducts();
+        Map<Category, Integer> result = categoryDAO.getAllCategoriesWithCountedProducts();
 
-        List<String> expected = new ArrayList<String>();
-        expected.add("Phone " + 2);
-        expected.add("Notebook " + 1);
-        expected.add("Tablets " + 3);
+        LinkedHashMap<Category, Integer> expected = new LinkedHashMap<>();
+        expected.put(new Category("Phone"), 0);
+        expected.put(new Category("Notebook"), 1);
+        expected.put(new Category("Tablets"), 2);
 
         assertThat(expected, is(result));
     }

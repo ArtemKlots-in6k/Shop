@@ -40,6 +40,7 @@ public class BillDAO {
     public Bill parse(ResultSet result) throws SQLException {
         int id = result.getInt("id");
         Date date = result.getDate("date");
-        return new Bill(date, new UserDao().getUserById(id));
+        int userId = result.getInt("user_id");
+        return new Bill(date, new UserDao().getUserById(userId));
     }
 }

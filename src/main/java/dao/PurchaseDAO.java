@@ -25,6 +25,16 @@ public class PurchaseDAO {
         return parse(result);
     }
 
+    public List<Purchase> getAllPurchasesByBillId(int id) throws SQLException {
+        setUpConnection();
+        List<Purchase> purchases = new ArrayList<>();
+        ResultSet result = statement.executeQuery("SELECT * FROM purchases WHERE bill_id = " + id);
+        while (result.next()) {
+            purchases.add(parse(result));
+        }
+        return purchases;
+    }
+
     public List<Purchase> getAll() throws SQLException {
         List<Purchase> purchases = new ArrayList<>();
         setUpConnection();
