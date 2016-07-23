@@ -7,19 +7,19 @@ import java.math.BigDecimal;
  */
 public class Purchase {
     private int id;
-    private int item_id;
+    private Item item;
     private BigDecimal price;
     private Bill bill;
 
 
-    public Purchase(int item_id, BigDecimal price, Bill bill) {
-        this.item_id = item_id;
+    public Purchase(Item item, BigDecimal price, Bill bill) {
+        this.item = item;
         this.price = price;
         this.bill = bill;
     }
 
-    public Purchase(int id, int item_id, BigDecimal price, Bill bill) {
-        this(item_id, price, bill);
+    public Purchase(int id, Item item, BigDecimal price, Bill bill) {
+        this(item, price, bill);
         this.id = id;
     }
 
@@ -27,12 +27,12 @@ public class Purchase {
         return id;
     }
 
-    public int getItem_id() {
-        return item_id;
+    public Item getItem() {
+        return item;
     }
 
-    public void setItem_id(int item_id) {
-        this.item_id = item_id;
+    public void setItem(Item item) {
+        this.item = item;
     }
 
     public BigDecimal getPrice() {
@@ -53,7 +53,7 @@ public class Purchase {
 
     @Override
     public String toString() {
-        return id + " " + item_id + " " + price.toString() + " " + bill;
+        return id + " " + item + " " + price.toString() + " " + bill;
     }
 
     @Override
@@ -62,7 +62,7 @@ public class Purchase {
         if (o == null || getClass() != o.getClass()) return false;
         Purchase purchase = (Purchase) o;
 
-        return item_id == purchase.item_id
+        return item.equals(purchase.item)
                 && price.equals(purchase.price)
                 && bill == purchase.bill;
     }

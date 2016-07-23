@@ -1,5 +1,5 @@
-import dao.UserDao;
-import entity.User;
+import dao.PurchaseDAO;
+import entity.Purchase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,13 +11,16 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * Created by Artem Klots on 7/22/16.
+ * Created by Artem Klots on 23.07.2016.
  */
-public class UserDAOTest extends DatabaseInitializer {
+public class PurchaseDAOTest extends DatabaseInitializer {
+    private PurchaseDAO purchaseDAO;
+
     @Before
     public void setUp() throws Exception {
         prepareConnection();
         super.setUp();
+        purchaseDAO = new PurchaseDAO();
     }
 
     @After
@@ -28,19 +31,11 @@ public class UserDAOTest extends DatabaseInitializer {
 
     @Test
     public void getAll() throws Exception {
-        UserDao userDao = new UserDao();
-
-        List<User> expect = new ArrayList<>();
-        expect.add(new User(0, "Robert"));
-        expect.add(new User(1, "John"));
-
-        assertThat(userDao.getAll(), is(expect));
+        assertThat(purchaseDAO.getAll().size(), is(4));
     }
 
     @Test
-    public void getUserById() throws Exception {
-        UserDao userDao = new UserDao();
-
-        assertThat(userDao.getUserById(1).getId(), is(1));
+    public void getPurchaseById() throws Exception {
+        assertThat(purchaseDAO.getPurchaseById(1).getId(), is(1));
     }
 }

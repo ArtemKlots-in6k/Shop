@@ -18,8 +18,15 @@ import java.util.List;
 public class PurchaseDAO {
     private Statement statement;
 
+    public Purchase getPurchaseById(int id) throws SQLException {
+        setUpConnection();
+        ResultSet result = statement.executeQuery("SELECT * FROM purchases WHERE id = " + id + ";");
+        result.next();
+        return parse(result);
+    }
+
     public List<Purchase> getAll() throws SQLException {
-        List<Purchase> purchases = new ArrayList<Purchase>();
+        List<Purchase> purchases = new ArrayList<>();
         setUpConnection();
 
         ResultSet result = statement.executeQuery("SELECT * FROM purchases");
@@ -39,6 +46,6 @@ public class PurchaseDAO {
         int itemId = result.getInt("item_id");
         BigDecimal price = result.getBigDecimal("price");
         int billId = result.getInt("bill_id");
-        return new Purchase(id, itemId, price, new BillDAO().getBillById(id));
+        return new Purchase(id, new ItemDAO().getItemById(itemId), price, new BillDAO().getBillById(billId));
     }
 }

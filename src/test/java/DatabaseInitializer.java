@@ -16,6 +16,7 @@ public class DatabaseInitializer {
         prepareCategories();
         prepareItems();
         preparePurchases();
+        prepareBills();
         prepareUsers();
     }
 
@@ -87,8 +88,16 @@ public class DatabaseInitializer {
         statement.executeUpdate("INSERT INTO users (name) VALUES ('John')");
     }
 
-    private void preparePurchases() throws SQLException {
+    private void prepareBills() throws SQLException {
         statement.executeUpdate("INSERT INTO bills (date, user_id) VALUES ('2016-07-18 12:30:15', 1)");
         statement.executeUpdate("INSERT INTO bills (date, user_id) VALUES ('2016-07-18 11:30:15', 0)");
+    }
+
+    private void preparePurchases() throws SQLException {
+        statement.executeUpdate("INSERT INTO purchases (item_id, price, bill_id) VALUES ( 0, 750.00, 0)");
+        statement.executeUpdate("INSERT INTO purchases (item_id, price, bill_id) VALUES ( 1, 350.00, 0)");
+        statement.executeUpdate("INSERT INTO purchases (item_id, price, bill_id) VALUES ( 2, 1300.00, 0)");
+        statement.executeUpdate("INSERT INTO purchases (item_id, price, bill_id) VALUES ( 4, 350.00, 1)");
+
     }
 }
