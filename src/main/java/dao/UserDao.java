@@ -13,30 +13,17 @@ import java.util.List;
 /**
  * Created by Artem Klots on 7/22/16.
  */
-public class UserDao {
-    private Statement statement;
+public class UserDao extends DAO {
+
+    public UserDao() {
+        tableName = "users";
+    }
 
     public User getUserById(int id) throws SQLException {
         setUpConnection();
         ResultSet result = statement.executeQuery("SELECT * FROM users WHERE id = " + id + ";");
         result.next();
         return parse(result);
-    }
-
-    public List<User> getAll() throws SQLException {
-        List<User> users = new ArrayList<User>();
-        setUpConnection();
-
-        ResultSet result = statement.executeQuery("SELECT * FROM users");
-        while (result.next()) {
-            users.add(parse(result));
-        }
-        return users;
-    }
-
-    private void setUpConnection() throws SQLException {
-        Connection connection = new ConnectionFactoryImpl().getConnection();
-        statement = connection.createStatement();
     }
 
     public User parse(ResultSet result) throws SQLException {
