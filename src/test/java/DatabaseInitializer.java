@@ -75,6 +75,7 @@ public class DatabaseInitializer {
 
         statement.executeUpdate("INSERT INTO items (title, category_id, price) VALUES ('iPhone', 0, 700.00)");
         statement.executeUpdate("INSERT INTO items (title, category_id, price) VALUES ('Samsung', 0, 300.50)");
+        statement.executeUpdate("INSERT INTO items (title, category_id, price) VALUES ('Lenovo', 0, 400.50)");
 
         statement.executeUpdate("INSERT INTO items (title, category_id, price) VALUES ('Lenovo Idea Pad', 1, 1500.00)");
 
@@ -91,13 +92,18 @@ public class DatabaseInitializer {
     private void prepareBills() throws SQLException {
         statement.executeUpdate("INSERT INTO bills (date, user_id) VALUES ('2016-07-18 12:30:15', 1)");
         statement.executeUpdate("INSERT INTO bills (date, user_id) VALUES ('2016-07-18 11:30:15', 0)");
+        statement.executeUpdate("INSERT INTO bills (date, user_id) VALUES ('2016-05-18 11:30:15', 0)");
     }
 
     private void preparePurchases() throws SQLException {
         statement.executeUpdate("INSERT INTO purchases (item_id, price, bill_id) VALUES ( 0, 750.00, 0)");
         statement.executeUpdate("INSERT INTO purchases (item_id, price, bill_id) VALUES ( 1, 350.00, 0)");
         statement.executeUpdate("INSERT INTO purchases (item_id, price, bill_id) VALUES ( 2, 1300.00, 0)");
-        statement.executeUpdate("INSERT INTO purchases (item_id, price, bill_id) VALUES ( 4, 350.00, 1)");
+        statement.executeUpdate("INSERT INTO purchases (item_id, price, bill_id) VALUES ( 2, 1300.00, 2)");
+        statement.executeUpdate("INSERT INTO purchases (item_id, price, bill_id) VALUES ( 2, 1300.00, 2)");
+        statement.executeUpdate("INSERT INTO purchases (item_id, price, bill_id) VALUES ( 0, 700.00, 1)");
+        statement.executeUpdate("INSERT INTO purchases (item_id, price, bill_id) VALUES ( 0, 700.00, 1)");
+        statement.executeUpdate("INSERT INTO purchases (item_id, price, bill_id) VALUES ( 1, 400.00, 0)");
 
     }
 }

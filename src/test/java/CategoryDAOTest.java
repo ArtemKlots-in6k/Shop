@@ -1,5 +1,6 @@
 import dao.CategoryDAO;
 import entity.Category;
+import entity.Item;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,6 +9,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertThat;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -32,6 +34,21 @@ public class CategoryDAOTest extends DatabaseInitializer {
     @Test
     public void getCategoryById() throws Exception {
         assertThat(categoryDAO.getCategoryById(1).getId(), is(1));
+    }
+
+    @Test
+    public void getCategoryByTitle() throws Exception {
+        assertThat(categoryDAO.getCategoryByTitle("Phone").getTitle(), is("Phone"));
+    }
+
+    @Test
+    public void getTopThreeItemsInCategory() throws Exception {
+        Map<Item, Integer> map = new LinkedHashMap<>();
+        map.put(new Item("iPhone", new Category("Phone"), new BigDecimal("700.00")), 3);
+        map.put(new Item("Samsung", new Category("Phone"), new BigDecimal("300.50")), 2);
+        map.put(new Item("Lenovo", new Category("Phone"), new BigDecimal("400.50")), 1);
+
+        assertThat(categoryDAO.getTopThreeItemsInCategory("Phone"), is(map));
     }
 
     @Test

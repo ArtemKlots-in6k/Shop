@@ -65,4 +65,12 @@ public class Item {
 
         return title.equals(item.title) && category.equals(item.category) && price.equals(item.price);
     }
+
+    @Override
+    public int hashCode() {
+        int result = title.hashCode();
+        result = 31 * result + category.hashCode();
+        result = 31 * result + price.hashCode();
+        return result;
+    }
 }

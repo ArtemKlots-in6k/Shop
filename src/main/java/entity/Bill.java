@@ -8,7 +8,7 @@ import java.time.LocalDate;
  */
 public class Bill {
     private int id;
-    private Date date;
+    private Date date; // TODO: 23.07.2016 избавится от SQL зависимости
     private User user;
 
     public Bill(Date date, User user) {

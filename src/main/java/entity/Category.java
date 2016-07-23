@@ -41,4 +41,9 @@ public class Category {
 
         return title.equals(category.title);
     }
+
+    @Override
+    public int hashCode() {
+        return title.hashCode();
+    }
 }
