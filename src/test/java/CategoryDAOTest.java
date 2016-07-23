@@ -11,7 +11,7 @@ import static org.junit.Assert.assertThat;
 import java.util.*;
 
 /**
- * Created by employee on 7/21/16.
+ * Created by Artem Klots on 7/21/16.
  */
 public class CategoryDAOTest extends DatabaseInitializer {
     CategoryDAO categoryDAO;
@@ -27,6 +27,11 @@ public class CategoryDAOTest extends DatabaseInitializer {
     public void tearDown() throws Exception {
         prepareConnection();
         super.tearDown();
+    }
+
+    @Test
+    public void getCategoryById() throws Exception {
+        assertThat(categoryDAO.getCategoryById(1).getId(), is(1));
     }
 
     @Test

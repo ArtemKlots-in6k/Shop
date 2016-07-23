@@ -15,6 +15,12 @@ import java.util.*;
 public class CategoryDAO {
     private Statement statement;
 
+    public Category getCategoryById(int id) throws SQLException {
+        setUpConnection();
+        ResultSet result = statement.executeQuery("SELECT * FROM categories WHERE id = " + id + ";");
+        result.next();
+        return parse(result);
+    }
     public List<Category> getAll() throws SQLException {
         List<Category> categories = new ArrayList<Category>();
         setUpConnection();
