@@ -13,8 +13,11 @@ import java.util.*;
 /**
  * Created by Artem Klots on 7/21/16.
  */
-public class CategoryDAO {
-    private Statement statement;
+public class CategoryDAO extends DAO {
+
+    public CategoryDAO() {
+        tableName = "categories";
+    }
 
     public Category getCategoryById(int id) throws SQLException {
         setUpConnection();
@@ -50,17 +53,6 @@ public class CategoryDAO {
         return result;
     }
 
-    public List<Category> getAll() throws SQLException {
-        List<Category> categories = new ArrayList<Category>();
-        setUpConnection();
-
-        ResultSet result = statement.executeQuery("SELECT * FROM categories ");
-        while (result.next()) {
-            categories.add(parse(result));
-        }
-        return categories;
-    }
-
     public Map<Category, Integer> getAllCategoriesWithCountedProducts() throws SQLException {
         Map<Category, Integer> categories = new LinkedHashMap<>();
         setUpConnection();
@@ -76,11 +68,6 @@ public class CategoryDAO {
             categories.put(new CategoryDAO().getCategoryById(categoryId), numberOfItems);
         }
         return categories;
-    }
-
-    private void setUpConnection() throws SQLException {
-        Connection connection = new ConnectionFactoryImpl().getConnection();
-        statement = connection.createStatement();
     }
 
     public Category parse(ResultSet result) throws SQLException {
