@@ -15,12 +15,15 @@ import java.util.List;
 /**
  * Created by Artem Klots on 7/22/16.
  */
-public class PurchaseDAO {
-    private Statement statement;
+public class PurchaseDAO extends DAO {
+
+    public PurchaseDAO() {
+        tableName = "purchases";
+    }
 
     public Purchase getPurchaseById(int id) throws SQLException {
         setUpConnection();
-        ResultSet result = statement.executeQuery("SELECT * FROM purchases WHERE id = " + id + ";");
+        ResultSet result = statement.executeQuery("SELECT * FROM " + tableName + " WHERE id = " + id + ";");
         result.next();
         return parse(result);
     }
@@ -28,27 +31,11 @@ public class PurchaseDAO {
     public List<Purchase> getAllPurchasesByBillId(int id) throws SQLException {
         setUpConnection();
         List<Purchase> purchases = new ArrayList<>();
-        ResultSet result = statement.executeQuery("SELECT * FROM purchases WHERE bill_id = " + id);
+        ResultSet result = statement.executeQuery("SELECT * FROM " + tableName + " WHERE bill_id = " + id);
         while (result.next()) {
             purchases.add(parse(result));
         }
         return purchases;
-    }
-
-    public List<Purchase> getAll() throws SQLException {
-        List<Purchase> purchases = new ArrayList<>();
-        setUpConnection();
-
-        ResultSet result = statement.executeQuery("SELECT * FROM purchases");
-        while (result.next()) {
-            purchases.add(parse(result));
-        }
-        return purchases;
-    }
-
-    private void setUpConnection() throws SQLException {
-        Connection connection = new ConnectionFactoryImpl().getConnection();
-        statement = connection.createStatement();
     }
 
     public Purchase parse(ResultSet result) throws SQLException {
