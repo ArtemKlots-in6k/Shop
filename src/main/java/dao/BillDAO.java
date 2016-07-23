@@ -5,6 +5,7 @@ import entity.Bill;
 
 import java.sql.*;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -38,7 +39,7 @@ public class BillDAO {
     }
 
     public List<Bill> getAll() throws SQLException {
-        List<Bill> bills = new ArrayList<Bill>();
+        List<Bill> bills = new ArrayList<>();
         setUpConnection();
 
         ResultSet result = statement.executeQuery("SELECT * FROM bills");
@@ -55,7 +56,7 @@ public class BillDAO {
 
     public Bill parse(ResultSet result) throws SQLException {
         int id = result.getInt("id");
-        Date date = result.getDate("date");
+        LocalDate date = result.getDate("date").toLocalDate();
         int userId = result.getInt("user_id");
         return new Bill(date, new UserDao().getUserById(userId));
     }

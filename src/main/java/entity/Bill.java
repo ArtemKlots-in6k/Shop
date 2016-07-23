@@ -8,15 +8,15 @@ import java.time.LocalDate;
  */
 public class Bill {
     private int id;
-    private Date date; // TODO: 23.07.2016 избавится от SQL зависимости
+    private LocalDate date;
     private User user;
 
-    public Bill(Date date, User user) {
+    public Bill(LocalDate date, User user) {
         this.date = date;
         this.user = user;
     }
 
-    public Bill(int id, Date date, User user) {
+    public Bill(int id, LocalDate date, User user) {
         this(date, user);
         this.id = id;
     }
@@ -25,11 +25,11 @@ public class Bill {
         return id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
