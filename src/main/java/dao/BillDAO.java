@@ -2,6 +2,7 @@ package dao;
 
 import ConnectionFactory.ConnectionFactoryImpl;
 import entity.Bill;
+import entity.User;
 
 import java.sql.*;
 import java.sql.Date;
@@ -45,6 +46,7 @@ public class BillDAO extends DAO {
         int id = result.getInt("id");
         LocalDate date = result.getDate("date").toLocalDate();
         int userId = result.getInt("user_id");
-        return new Bill(date, new UserDao().getUserById(userId));
+//        return new Bill(date, new UserDao().getUserById(userId)); // TODO: 7/25/16 починить
+        return new Bill(date, new User());
     }
 }

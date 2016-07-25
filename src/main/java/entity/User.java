@@ -1,8 +1,12 @@
 package entity;
 
+import javax.persistence.*;
+
 /**
  * Created by Artem Klots on 7/22/16.
  */
+@Entity
+@Table(name = "users")
 public class User {
     private int id;
     private String name;
@@ -16,10 +20,20 @@ public class User {
         this.id = id;
     }
 
+    public User() {
+    }
+
+    @Id
+    @GeneratedValue
     public int getId() {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Column(unique = true)
     public String getName() {
         return name;
     }
