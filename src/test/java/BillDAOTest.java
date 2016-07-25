@@ -1,14 +1,20 @@
 import dao.BillDAO;
+import dao.UserDao;
 import entity.Bill;
+import entity.User;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -17,6 +23,7 @@ import static org.junit.Assert.assertThat;
  */
 public class BillDAOTest extends DatabaseInitializer {
     BillDAO billDAO;
+
     @Before
     public void setUp() throws Exception {
         prepareConnection();
@@ -32,12 +39,45 @@ public class BillDAOTest extends DatabaseInitializer {
 
     @Test
     public void getBillById() throws Exception {
+        Bill bill = new Bill(0, Date.valueOf(LocalDate.of(2016, 7, 18)), new User(1, "John"));
+
         Bill expectedBill = billDAO.getBillById(0);
-        assertThat(expectedBill.getId(), is(0));
+
+        assertThat(expectedBill, is(bill));
     }
+
+    @Test
+    public void getBillByAnotherId() throws Exception {
+        Bill bill = new Bill(1, Date.valueOf(LocalDate.of(2016, 7, 18)), new User(0, "Robert"));
+
+        Bill expectedBill = billDAO.getBillById(1);
+
+        assertThat(expectedBill, is(bill));
+    }
+
     @Test
     public void getAll() throws Exception {
-        assertThat(billDAO.getAll().size(), is(3));
+        List expected = asList(
+                new Bill(Date.valueOf(LocalDate.of(2016, 7, 18)), new User(1, "John")),
+                new Bill(Date.valueOf(LocalDate.of(2016, 7, 18)), new User(0, "Robert")),
+                new Bill(Date.valueOf(LocalDate.of(2016, 5, 18)), new User(0, "Robert"))
+        );
+
+        assertThat(billDAO.getAll(), is(expected));
+    }
+
+    @Test
+    public void createAndGetAll() throws Exception {
+        List expected = asList(
+                new Bill(Date.valueOf(LocalDate.of(2016, 7, 18)), new User(1, "John")),
+                new Bill(Date.valueOf(LocalDate.of(2016, 7, 18)), new User(0, "Robert")),
+                new Bill(Date.valueOf(LocalDate.of(2016, 5, 18)), new User(0, "Robert")),
+                new Bill(Date.valueOf(LocalDate.of(2016, 7, 25)), new User(1, "John"))
+        );
+
+        billDAO.create(Date.valueOf(LocalDate.of(2016, 7, 25)), new UserDao().getUserById(1));
+
+        assertThat(billDAO.getAll(), is(expected));
     }
 
     @Test

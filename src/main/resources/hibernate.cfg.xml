@@ -14,5 +14,6 @@
         <!-- <property name="hbm2ddl.auto">update</property> -->
 
         <mapping class="entity.User"/>
+        <mapping class="entity.Bill"/>
     </session-factory>
 </hibernate-configuration>
