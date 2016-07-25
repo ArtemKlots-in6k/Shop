@@ -15,5 +15,6 @@
 
         <mapping class="entity.User"/>
         <mapping class="entity.Bill"/>
+        <mapping class="entity.Category"/>
     </session-factory>
 </hibernate-configuration>

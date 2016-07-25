@@ -1,8 +1,12 @@
 package entity;
 
+import javax.persistence.*;
+
 /**
  * Created by Artem Klots on 7/21/16.
  */
+@Entity
+@Table(name = "categories")
 public class Category {
     private int id;
     private String title;
@@ -16,6 +20,10 @@ public class Category {
         this.title = title;
     }
 
+    public Category() {
+    }
+
+    @Column(unique = true)
     public String getTitle() {
         return title;
     }
@@ -24,8 +32,14 @@ public class Category {
         this.title = title;
     }
 
+    @Id
+    @GeneratedValue
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
