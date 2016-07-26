@@ -35,24 +35,16 @@ public class CategoryDAO extends HibernateDAO {
         return (Category) categotiesCriteria.uniqueResult();
     }
 
-    public Map<Item, Integer> getTopThreeItemsInCategory(String category) throws SQLException {
-        Map<Item, Integer> result = new LinkedHashMap<>();
-//        setUpConnection();
-//
-//        ResultSet response = statement.executeQuery("" +
-//                "SELECT items.id, COUNT(category_id) AS numberOfSales " +
-//                "FROM items " +
-//                "LEFT JOIN purchases ON item_id = items.id " +
-//                "LEFT JOIN bills ON bill_id = bills.id " +
-//                "WHERE category_id = " + new CategoryDAO().getCategoryByTitle(category).getId() + " " +
-//                "AND date >= DATE_SUB(CURRENT_DATE, INTERVAL 60 DAY) " +
-//                "GROUP BY items.id " +
-//                "ORDER BY COUNT(item_id) DESC " +
-//                "LIMIT 3");
-//        while (response.next()) {
-//            result.put(new ItemDAO().getItemById(response.getInt("id")), response.getInt("numberOfSales"));
-//        }
-        return result;
+    public List getTopThreeItemsInCategory(String categoryTitle) throws SQLException {
+        Query query = getSession().createQuery("" +
+                        "SELECT new entity.Top3(items,  COUNT(items.category)) " +
+                        "FROM Item items, Category categories " +
+                        "WHERE categories.title = '" + categoryTitle + "' " +
+                        "GROUP BY items.id "
+//                "ORDER BY COUNT(items.category.id) DESC "
+        ).setMaxResults(3);
+        return query.list();
+//        return result;
     }
 
     public List getAll() throws Exception {

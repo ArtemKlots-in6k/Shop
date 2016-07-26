@@ -2,9 +2,9 @@ import dao.CategoryDAO;
 import entity.Category;
 import entity.CategoryStatistic;
 import entity.Item;
+import entity.Top3;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -58,12 +58,12 @@ public class CategoryDAOTest extends DatabaseInitializer {
     @Test
     public void getTopThreeItemsInCategory() throws Exception {
         Category category = new Category("Phone");
-        Map<Item, Integer> map = new LinkedHashMap<>();
-        map.put(new Item("iPhone", category, new BigDecimal("700.00")), 3);
-        map.put(new Item("Samsung", category, new BigDecimal("300.50")), 2);
-        map.put(new Item("Lenovo", category, new BigDecimal("400.50")), 1);
+        List<Top3> expectedResults = new ArrayList<>();
+        expectedResults.add(new Top3(new Item(0, "iPhone", category, new BigDecimal("700.00")), 3));
+        expectedResults.add(new Top3(new Item(1, "Samsung", category, new BigDecimal("300.50")), 2));
+        expectedResults.add(new Top3(new Item(2, "Lenovo", category, new BigDecimal("400.50")), 1));
 
-        assertThat(categoryDAO.getTopThreeItemsInCategory("Phone"), is(map));
+        assertThat(categoryDAO.getTopThreeItemsInCategory("Phone"), is(expectedResults));
     }
 
     @Test
