@@ -4,6 +4,7 @@ import ConnectionFactory.*;
 import entity.Category;
 import entity.Item;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 
 import java.sql.Connection;
@@ -56,8 +57,8 @@ public class CategoryDAO extends HibernateDAO {
         return result;
     }
 
-    public Map<Category, Integer> getAllCategoriesWithCountedProducts() throws SQLException {
-        Map<Category, Integer> categories = new LinkedHashMap<>();
+    public List getAllCategoriesWithCountedProducts() throws SQLException {
+//        Map<Category, Integer> categories = new LinkedHashMap<>();
 //        setUpConnection();
 //        ResultSet result = statement.executeQuery("" +
 //                "SELECT categories.id, categories.title, COUNT(category_id) AS numberOfItems " +
@@ -70,7 +71,16 @@ public class CategoryDAO extends HibernateDAO {
 //            int numberOfItems = result.getInt("id");
 //            categories.put(new CategoryDAO().getCategoryById(categoryId), numberOfItems);
 //        }
-        return categories;
+        Query query = getSession().createQuery("" +
+                "SELECT categories.id, categories.title, COUNT(items.category) " +
+                "FROM Category categories, Item items " +
+                "WHERE categories.id = items.category.id " +
+                "GROUP BY categories.id");
+//        query.setParameter("code", "7277");
+
+        List list = query.list();
+        System.out.println(list.get(0).toString());
+        return list;
     }
 
     public Category parse(ResultSet result) throws SQLException {

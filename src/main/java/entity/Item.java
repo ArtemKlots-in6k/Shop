@@ -1,10 +1,13 @@
 package entity;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 /**
  * Created by Artem Klots on 7/21/16.
  */
+@Entity
+@Table(name = "items")
 public class Item {
     private int id;
     private String title;
@@ -24,6 +27,10 @@ public class Item {
         this.price = price;
     }
 
+    public Item() {
+    }
+
+    @Column(unique = true)
     public String getTitle() {
         return title;
     }
@@ -32,10 +39,18 @@ public class Item {
         this.title = title;
     }
 
+    @Id
+    @GeneratedValue
     public int getId() {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
     public Category getCategory() {
         return category;
     }
@@ -44,6 +59,7 @@ public class Item {
         this.category = category;
     }
 
+    @Column(unique = true)
     public BigDecimal getPrice() {
         return price;
     }
