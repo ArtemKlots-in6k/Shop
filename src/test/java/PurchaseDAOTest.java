@@ -1,6 +1,9 @@
 import dao.BillDAO;
 import dao.ItemDAO;
 import dao.PurchaseDAO;
+import entity.Bill;
+import entity.Category;
+import entity.Item;
 import entity.Purchase;
 import org.junit.After;
 import org.junit.Before;
@@ -11,6 +14,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -57,10 +61,29 @@ public class PurchaseDAOTest extends DatabaseInitializer {
         assertThat(purchaseDAO.getPurchaseById(2), is(expectedPurchase));
     }
 
-    @Ignore
     @Test
     public void getAllPurchasesByBillId() throws Exception {
-        assertThat(purchaseDAO.getAllPurchasesByBillId(0).size(), is(4));
+        Bill bill = new BillDAO().getBillById(0);
+        Category phoneCategory = new Category("Phone");
+        List expected = asList(
+                new Purchase(
+                        new Item("iPhone", phoneCategory, new BigDecimal("700.00")),
+                        new BigDecimal(750),
+                        bill),
+                new Purchase(
+                        new Item("Samsung", phoneCategory, new BigDecimal("300.50")),
+                        new BigDecimal(350),
+                        bill),
+                new Purchase(
+                        new Item("Lenovo", phoneCategory, new BigDecimal("400.50")),
+                        new BigDecimal(1300.00),
+                        bill),
+                new Purchase(
+                        new Item("Samsung", phoneCategory, new BigDecimal("300.50")),
+                        new BigDecimal(400),
+                        bill)
+        );
+        assertThat(purchaseDAO.getAllPurchasesByBillId(0), is(expected));
     }
 
     @Test

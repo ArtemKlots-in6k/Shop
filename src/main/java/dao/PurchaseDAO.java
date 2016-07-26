@@ -7,6 +7,7 @@ import entity.Purchase;
 import entity.User;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 
 import java.math.BigDecimal;
@@ -51,7 +52,11 @@ public class PurchaseDAO extends HibernateDAO {
 //        while (result.next()) {
 //            purchases.add(parse(result));
 //        }
-        return purchases;
+//        return purchases;
+        Query query = getSession().createQuery(
+                "FROM Purchase purchases " +
+                        "WHERE purchases.bill.id = " + id);
+        return query.list();
     }
 
     public Purchase parse(ResultSet result) throws SQLException {
