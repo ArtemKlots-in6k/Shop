@@ -5,6 +5,7 @@ import entity.Bill;
 import entity.User;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 
 import java.sql.*;
@@ -54,7 +55,7 @@ public class BillDAO extends HibernateDAO {
         return (Bill) billCriteria.uniqueResult();
     }
 
-    public Map<Integer, Map<Integer, Date>> getAllBillsByUserId(int id) throws SQLException {
+    public List getAllBillsByUserId(int id) throws SQLException {
         Map<Integer, Map<Integer, Date>> result = new LinkedHashMap<>();
 //        setUpConnection();
 //
@@ -68,7 +69,16 @@ public class BillDAO extends HibernateDAO {
 //            bill.put(response.getInt("amount"), response.getDate("date"));
 //            result.put(response.getInt("id"), bill);
 //        }
-        return result;
+//        return result;
+
+        Query query = getSession().createQuery("" +
+                "select new list (bill.id, bill.date, SUM (purchase.price)) " +
+                "FROM Purchase purchase, Bill bill " +
+                "WHERE bill.user.id = " + id + " " +
+                "AND purchase.bill.id = bill.id " +
+                "GROUP BY bill.id, bill.date "
+        );
+        return query.list();
     }
 
     public Bill parse(ResultSet result) throws Exception {

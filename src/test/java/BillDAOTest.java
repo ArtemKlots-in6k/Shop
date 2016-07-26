@@ -83,8 +83,11 @@ public class BillDAOTest extends DatabaseInitializer {
     @Ignore
     @Test
     public void getAllBillsByUserId() throws Exception {
-        int userId = 1;
-        Map result = billDAO.getAllBillsByUserId(userId);
-        assertThat(result.get(0).toString(), is("{2800=2016-07-18}"));
+        int userId = 0;
+        List expectedList = asList(
+                asList(2, LocalDate.of(2016, 5, 18), 2600),
+                asList(1, LocalDate.of(2016, 7, 18), 1400)
+        );
+        assertThat(billDAO.getAllBillsByUserId(userId), is(expectedList));
     }
 }
