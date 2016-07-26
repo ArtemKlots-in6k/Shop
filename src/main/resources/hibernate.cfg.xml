@@ -17,5 +17,6 @@
         <mapping class="entity.Bill"/>
         <mapping class="entity.Category"/>
         <mapping class="entity.Item"/>
+        <mapping class="entity.Purchase"/>
     </session-factory>
 </hibernate-configuration>

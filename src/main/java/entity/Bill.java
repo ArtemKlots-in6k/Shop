@@ -64,6 +64,6 @@ public class Bill {
     @Override
     public boolean equals(Object obj) {
         Bill bill = (Bill) obj;
-        return date.equals(((Bill) obj).date) && user.equals(((Bill) obj).getUser());
+        return date.equals(bill.date) && user.equals(bill.getUser());
     }
 }

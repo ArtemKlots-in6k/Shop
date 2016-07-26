@@ -1,9 +1,13 @@
+import dao.BillDAO;
+import dao.ItemDAO;
 import dao.PurchaseDAO;
 import entity.Purchase;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,17 +34,38 @@ public class PurchaseDAOTest extends DatabaseInitializer {
     }
 
     @Test
-    public void getAll() throws Exception {
-        assertThat(purchaseDAO.getAll().size(), is(8));
+    public void getPurchaseById() throws Exception {
+        Purchase expectedPurchase = new Purchase(
+                1,
+                new ItemDAO().getItemById(1),
+                new BigDecimal("350"),
+                new BillDAO().getBillById(0)
+        );
+
+        assertThat(purchaseDAO.getPurchaseById(1), is(expectedPurchase));
     }
 
     @Test
-    public void getPurchaseById() throws Exception {
-        assertThat(purchaseDAO.getPurchaseById(1).getId(), is(1));
+    public void getPurchaseByAnotherId() throws Exception {
+        Purchase expectedPurchase = new Purchase(
+                2,
+                new ItemDAO().getItemById(2),
+                new BigDecimal("1300"),
+                new BillDAO().getBillById(0)
+        );
+
+        assertThat(purchaseDAO.getPurchaseById(2), is(expectedPurchase));
     }
 
+    @Ignore
     @Test
     public void getAllPurchasesByBillId() throws Exception {
         assertThat(purchaseDAO.getAllPurchasesByBillId(0).size(), is(4));
+    }
+
+    @Test
+    public void create() throws Exception {
+        Purchase newPurchase = purchaseDAO.create(new ItemDAO().getItemById(1), new BigDecimal("350"), new BillDAO().getBillById(0));
+        assertThat(purchaseDAO.getPurchaseById(8), is(newPurchase));
     }
 }
