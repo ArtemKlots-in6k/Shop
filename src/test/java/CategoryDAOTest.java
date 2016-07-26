@@ -1,5 +1,6 @@
 import dao.CategoryDAO;
 import entity.Category;
+import entity.CategoryStatistic;
 import entity.Item;
 import org.junit.After;
 import org.junit.Before;
@@ -79,18 +80,11 @@ public class CategoryDAOTest extends DatabaseInitializer {
 
     @Test
     public void getAllCategoriesWithCountedProducts() throws Exception {
-//        Map<Category, Integer> result = categoryDAO.getAllCategoriesWithCountedProducts();
+        List<CategoryStatistic> expected = new ArrayList<>();
+        expected.add(new CategoryStatistic(0, "Phone", 3));
+        expected.add(new CategoryStatistic(1, "Notebook", 1));
+        expected.add(new CategoryStatistic(2, "Tablets", 3));
 
-        LinkedHashMap<Category, Integer> expected = new LinkedHashMap<>();
-        expected.put(new Category("Phone"), 0);
-        expected.put(new Category("Notebook"), 1);
-        expected.put(new Category("Tablets"), 2);
-
-        List list = categoryDAO.getAllCategoriesWithCountedProducts();
-        for (int i = 0; i < 2; i++) {
-//            System.out.println(list.get(i).getClass());
-        }
-
-//        assertThat(expected, is(result));
+        assertThat(categoryDAO.getAllCategoriesWithCountedProducts(), is(expected));
     }
 }

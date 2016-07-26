@@ -1,16 +1,13 @@
 package dao;
 
-import ConnectionFactory.*;
 import entity.Category;
 import entity.Item;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.*;
 
 /**
@@ -58,29 +55,12 @@ public class CategoryDAO extends HibernateDAO {
     }
 
     public List getAllCategoriesWithCountedProducts() throws SQLException {
-//        Map<Category, Integer> categories = new LinkedHashMap<>();
-//        setUpConnection();
-//        ResultSet result = statement.executeQuery("" +
-//                "SELECT categories.id, categories.title, COUNT(category_id) AS numberOfItems " +
-//                "FROM items, categories " +
-//                "WHERE category_id = categories.id " +
-//                "GROUP BY categories.id");
-//
-//        while (result.next()) {
-//            int categoryId = result.getInt("id");
-//            int numberOfItems = result.getInt("id");
-//            categories.put(new CategoryDAO().getCategoryById(categoryId), numberOfItems);
-//        }
         Query query = getSession().createQuery("" +
-                "SELECT categories.id, categories.title, COUNT(items.category) " +
+                "SELECT new entity.CategoryStatistic(categories.id, categories.title,  COUNT(items.category)) " +
                 "FROM Category categories, Item items " +
                 "WHERE categories.id = items.category.id " +
                 "GROUP BY categories.id");
-//        query.setParameter("code", "7277");
-
-        List list = query.list();
-        System.out.println(list.get(0).toString());
-        return list;
+        return query.list();
     }
 
     public Category parse(ResultSet result) throws SQLException {
