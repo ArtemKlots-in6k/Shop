@@ -72,11 +72,11 @@ public class BillDAO extends HibernateDAO {
 //        return result;
 
         Query query = getSession().createQuery("" +
-                "select new list (bill.id, bill.date, SUM (purchase.price)) " +
-                "FROM Purchase purchase, Bill bill " +
+                "select new entity.UserBill(purchase.bill, SUM (purchase.price)) " +
+                "FROM Purchase purchase, in(purchase.bill) bill " +
                 "WHERE bill.user.id = " + id + " " +
                 "AND purchase.bill.id = bill.id " +
-                "GROUP BY bill.id, bill.date "
+                "GROUP BY purchase.bill "
         );
         return query.list();
     }

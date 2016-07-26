@@ -2,11 +2,13 @@ import dao.BillDAO;
 import dao.UserDao;
 import entity.Bill;
 import entity.User;
+import entity.UserBill;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -85,8 +87,8 @@ public class BillDAOTest extends DatabaseInitializer {
     public void getAllBillsByUserId() throws Exception {
         int userId = 0;
         List expectedList = asList(
-                asList(2, LocalDate.of(2016, 5, 18), 2600),
-                asList(1, LocalDate.of(2016, 7, 18), 1400)
+                new UserBill(new Bill(2, Date.valueOf(LocalDate.of(2016, 5, 18)), new User("Robert")), new BigDecimal(2600)),
+                new UserBill(new Bill(1, Date.valueOf(LocalDate.of(2016, 7, 18)), new User("Robert")), new BigDecimal(1400))
         );
         assertThat(billDAO.getAllBillsByUserId(userId), is(expectedList));
     }

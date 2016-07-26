@@ -1,36 +1,26 @@
 package entity;
 
 import java.math.BigDecimal;
-import java.sql.Date;
 
 /**
  * Created by employee on 7/26/16.
  */
 public class UserBill {
-    private int number;
-    private Date date;
+    private Bill bill;
     private BigDecimal price;
 
-    public UserBill(int number, Date date, BigDecimal price) {
-        this.number = number;
-        this.date = date;
+    public UserBill(Bill bill, BigDecimal price) {
+        this.bill = bill;
         this.price = price;
     }
 
-    public int getNumber() {
-        return number;
+
+    public Bill getBill() {
+        return bill;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
+    public void setBill(Bill bill) {
+        this.bill = bill;
     }
 
     public BigDecimal getPrice() {
@@ -39,5 +29,13 @@ public class UserBill {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "UserBill{" +
+                "bill=" + bill +
+                ", price=" + price +
+                '}';
     }
 }
