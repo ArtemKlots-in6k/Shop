@@ -66,16 +66,15 @@ public class CategoryDAOTest extends DatabaseInitializer {
         assertThat(categoryDAO.getTopThreeItemsInCategory("Phone"), is(map));
     }
 
-    @Ignore
     @Test
     public void getAll() throws Exception {
-//        List<Category> result = categoryDAO.getAll();
-//
-//        assertThat(result, contains(
-//                new Category("Phone"),
-//                new Category("Notebook"),
-//                new Category("Tablets")
-//        ));
+        List<Category> result = categoryDAO.getAll();
+
+        assertThat(result, contains(
+                new Category("Phone"),
+                new Category("Notebook"),
+                new Category("Tablets")
+        ));
     }
 
     @Test

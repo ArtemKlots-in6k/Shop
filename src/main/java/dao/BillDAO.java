@@ -30,7 +30,7 @@ public class BillDAO extends HibernateDAO {
             return bill;
         } catch (HibernateException e) {
             rollback();
-            throw new Exception("Could not create" + e.getMessage(), e);
+            throw new Exception("Could not create bill" + e.getMessage(), e);
         }
     }
 
@@ -42,7 +42,7 @@ public class BillDAO extends HibernateDAO {
             return result;
         } catch (HibernateException e) {
             rollback();
-            throw new Exception("Could not get user ", e);
+            throw new Exception("Could not get bills ", e);
         }
     }
 

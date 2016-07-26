@@ -3,6 +3,7 @@ package dao;
 import entity.Category;
 import entity.Item;
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 
@@ -52,6 +53,18 @@ public class CategoryDAO extends HibernateDAO {
 //            result.put(new ItemDAO().getItemById(response.getInt("id")), response.getInt("numberOfSales"));
 //        }
         return result;
+    }
+
+    public List getAll() throws Exception {
+        try {
+            begin();
+            List result = getSession().createCriteria(Category.class).list();
+            commit();
+            return result;
+        } catch (HibernateException e) {
+            rollback();
+            throw new Exception("Could not get category ", e);
+        }
     }
 
     public List getAllCategoriesWithCountedProducts() throws SQLException {
