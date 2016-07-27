@@ -12,13 +12,16 @@ import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertThat;
 
 import java.math.BigDecimal;
+import java.sql.*;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.*;
 
 /**
  * Created by Artem Klots on 7/21/16.
  */
 public class CategoryDAOTest extends DatabaseInitializer {
-    CategoryDAO categoryDAO;
+    private CategoryDAO categoryDAO;
 
     @Before
     public void setUp() throws Exception {
@@ -63,7 +66,10 @@ public class CategoryDAOTest extends DatabaseInitializer {
         expectedResults.add(new Top3(new Item(1, "Samsung", category, new BigDecimal("300.50")), 2));
         expectedResults.add(new Top3(new Item(2, "Lenovo", category, new BigDecimal("400.50")), 1));
 
-        assertThat(categoryDAO.getTopThreeItemsInCategory("Phone"), is(expectedResults));
+        assertThat(categoryDAO.getTopThreeItemsInCategory(
+                "Phone",
+                Date.valueOf(LocalDate.of(2016, 7, 27)),
+                Date.valueOf(LocalDate.of(2016, 5, 27))), is(expectedResults));
     }
 
     @Test

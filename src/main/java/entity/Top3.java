@@ -36,5 +36,15 @@ public class Top3 {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        Top3 top3 = (Top3) o;
+
+        if (count != top3.count) return false;
+        return item != null ? item.equals(top3.item) : top3.item == null;
+
+    }
 }

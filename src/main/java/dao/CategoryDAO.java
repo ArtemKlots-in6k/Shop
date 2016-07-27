@@ -7,8 +7,10 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -35,14 +37,19 @@ public class CategoryDAO extends HibernateDAO {
         return (Category) categotiesCriteria.uniqueResult();
     }
 
-    public List getTopThreeItemsInCategory(String categoryTitle) throws SQLException {
+    public List getTopThreeItemsInCategory(String categoryTitle, Date today, Date twoMonthAgo) throws SQLException {
         Query query = getSession().createQuery("" +
-                        "SELECT new entity.Top3(items,  COUNT(items.category)) " +
-                        "FROM Item items, Category categories " +
-                        "WHERE categories.title = '" + categoryTitle + "' " +
-                        "GROUP BY items.id "
+                        "SELECT new entity.Top3(purchases.item,  COUNT(purchases.item.id)) " +
+                        "FROM Purchase purchases " +
+                        "WHERE purchases.item.category.title = :categoryTitle " +
+                        "AND purchases.bill.date between :twoMonthAgo AND :today  " +
+                        "GROUP BY purchases.item " +
+                        "ORDER BY COUNT(purchases.item.id) DESC "
 //                "ORDER BY COUNT(items.category.id) DESC "
-        ).setMaxResults(3);
+        ).setParameter("categoryTitle", categoryTitle)
+                .setParameter("today", today)
+                .setParameter("twoMonthAgo", twoMonthAgo)
+                .setMaxResults(3);
         return query.list();
 //        return result;
     }
