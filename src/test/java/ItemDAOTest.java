@@ -64,7 +64,7 @@ public class ItemDAOTest extends DatabaseInitializer {
         assertThat(itemDAO.getAll(), is(expected));
     }
 
-    @Ignore
+    @Ignore(value = "не работает Create")
     @Test
     public void createAndGetAll() throws Exception {
         expected.add(new Item("New Phone", phones, new BigDecimal("550.00")));

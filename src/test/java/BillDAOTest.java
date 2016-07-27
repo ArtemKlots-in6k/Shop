@@ -82,7 +82,6 @@ public class BillDAOTest extends DatabaseInitializer {
         assertThat(billDAO.getAll(), is(expected));
     }
 
-    @Ignore
     @Test
     public void getAllBillsByUserId() throws Exception {
         int userId = 0;
