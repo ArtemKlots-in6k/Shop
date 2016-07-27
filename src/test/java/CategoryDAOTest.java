@@ -1,8 +1,8 @@
 import dao.CategoryDAO;
 import entity.Category;
-import entity.CategoryStatistic;
+import entity.subsidiary.CategoryStatistic;
 import entity.Item;
-import entity.Top3;
+import entity.subsidiary.Top3;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +12,6 @@ import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertThat;
 
 import java.math.BigDecimal;
-import java.sql.*;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;

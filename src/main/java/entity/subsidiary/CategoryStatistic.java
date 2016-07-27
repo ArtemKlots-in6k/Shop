@@ -1,4 +1,4 @@
-package entity;
+package entity.subsidiary;
 
 /**
  * Created by employee on 7/26/16.

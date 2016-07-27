@@ -1,4 +1,6 @@
-package entity;
+package entity.subsidiary;
+
+import entity.Bill;
 
 import java.math.BigDecimal;
 

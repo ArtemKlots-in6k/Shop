@@ -1,4 +1,6 @@
-package entity;
+package entity.subsidiary;
+
+import entity.Item;
 
 /**
  * Created by employee on 7/26/16.

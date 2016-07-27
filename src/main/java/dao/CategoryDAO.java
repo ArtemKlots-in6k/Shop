@@ -39,7 +39,7 @@ public class CategoryDAO extends HibernateDAO {
 
     public List getTopThreeItemsInCategory(String categoryTitle, Date today, Date twoMonthAgo) throws SQLException {
         Query query = getSession().createQuery("" +
-                        "SELECT new entity.Top3(purchases.item,  COUNT(purchases.item.id)) " +
+                        "SELECT new entity.subsidiary.Top3(purchases.item,  COUNT(purchases.item.id)) " +
                         "FROM Purchase purchases " +
                         "WHERE purchases.item.category.title = :categoryTitle " +
                         "AND purchases.bill.date between :twoMonthAgo AND :today  " +
@@ -68,7 +68,7 @@ public class CategoryDAO extends HibernateDAO {
 
     public List getAllCategoriesWithCountedProducts() throws SQLException {
         Query query = getSession().createQuery("" +
-                "SELECT new entity.CategoryStatistic(categories.id, categories.title,  COUNT(items.category)) " +
+                "SELECT new entity.subsidiary.CategoryStatistic(categories.id, categories.title,  COUNT(items.category)) " +
                 "FROM Category categories, Item items " +
                 "WHERE categories.id = items.category.id " +
                 "GROUP BY categories.id");
