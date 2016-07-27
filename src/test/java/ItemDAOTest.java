@@ -24,21 +24,22 @@ public class ItemDAOTest extends DatabaseInitializer {
     private Category phones = new Category(0, "Phone");
     private Category notebooks = new Category(1, "Notebook");
     private Category tablets = new Category(2, "Tablets");
-    private List<Item> expected = asList(
-            new Item("iPhone", phones, new BigDecimal("700.00")),
-            new Item("Samsung", phones, new BigDecimal("300.50")),
-            new Item("Lenovo", phones, new BigDecimal("400.50")),
-            new Item("Lenovo Idea Pad", notebooks, new BigDecimal("1500.00")),
-            new Item("iPad", tablets, new BigDecimal("500.00")),
-            new Item("iPad mini", tablets, new BigDecimal("400.00")),
-            new Item("Samsung and some text", tablets, new BigDecimal("300.00"))
-    );
+    private List<Item> expected;
 
     @Before
     public void setUp() throws Exception {
         prepareConnection();
         super.setUp();
         itemDAO = new ItemDAO();
+        expected = new ArrayList<>(asList(
+                new Item("iPhone", phones, new BigDecimal("700.00")),
+                new Item("Samsung", phones, new BigDecimal("300.50")),
+                new Item("Lenovo", phones, new BigDecimal("400.50")),
+                new Item("Lenovo Idea Pad", notebooks, new BigDecimal("1500.00")),
+                new Item("iPad", tablets, new BigDecimal("500.00")),
+                new Item("iPad mini", tablets, new BigDecimal("400.00")),
+                new Item("Samsung and some text", tablets, new BigDecimal("300.00"))
+        ));
     }
 
     @After
@@ -64,7 +65,6 @@ public class ItemDAOTest extends DatabaseInitializer {
         assertThat(itemDAO.getAll(), is(expected));
     }
 
-    @Ignore(value = "не работает Create")
     @Test
     public void createAndGetAll() throws Exception {
         expected.add(new Item("New Phone", phones, new BigDecimal("550.00")));
