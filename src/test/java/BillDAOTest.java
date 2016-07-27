@@ -91,4 +91,13 @@ public class BillDAOTest extends DatabaseInitializer {
         );
         assertThat(billDAO.getAllBillsByUserId(userId), is(expectedList));
     }
+
+    @Test
+    public void getAllBillsByAnotherUserId() throws Exception {
+        int userId = 1;
+        List expectedList = asList(
+                new UserBill(new Bill(0, Date.valueOf(LocalDate.of(2016, 7, 18)), new User("John")), new BigDecimal(2800))
+        );
+        assertThat(billDAO.getAllBillsByUserId(userId), is(expectedList));
+    }
 }
