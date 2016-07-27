@@ -7,7 +7,14 @@ import entity.Item;
 import entity.User;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.sql.*;
@@ -17,7 +24,14 @@ import java.util.List;
 /**
  * Created by Artem Klots on 7/21/16.
  */
-public class ItemDAO extends HibernateDAO {
+@Transactional
+@Repository
+public class ItemDAO {
+
+    private SessionFactory sessionFactory;
+
+    @Autowired
+    CategoryDAO categoryDAO;
 
     public ItemDAO() {
 
@@ -26,36 +40,20 @@ public class ItemDAO extends HibernateDAO {
     // TODO: 7/26/16 Не работает
     public Item create(String title, Category category, BigDecimal price)
             throws Exception {
-        try {
-            begin();
             Item item = new Item(title, category, price);
-            getSession().save(item);
-            commit();
+        sessionFactory.getCurrentSession().save(item);
             return item;
-        } catch (HibernateException e) {
-            rollback();
-            throw new Exception("Could not create item" + e.getMessage(), e);
-        }
     }
 
     public Item getItemById(int id) throws SQLException {
-        begin();
-        Criteria itemCriteria = getSession().createCriteria(Item.class);
+        Criteria itemCriteria = sessionFactory.getCurrentSession().createCriteria(Item.class);
         itemCriteria.add(Restrictions.eq("id", id));
-        commit();
         return (Item) itemCriteria.uniqueResult();
     }
 
     public List getAll() throws Exception {
-        try {
-            begin();
-            List result = getSession().createCriteria(Item.class).list();
-            commit();
+        List result = sessionFactory.getCurrentSession().createCriteria(Item.class).list();
             return result;
-        } catch (HibernateException e) {
-            rollback();
-            throw new Exception("Could not get items ", e);
-        }
     }
 
     public Item parse(ResultSet result) throws SQLException {
@@ -63,6 +61,14 @@ public class ItemDAO extends HibernateDAO {
         String title = result.getString("title");
         int categoryId = result.getInt("category_id");
         BigDecimal price = result.getBigDecimal("price");
-        return new Item(id, title, new CategoryDAO().getCategoryById(categoryId), price);
+        return new Item(id, title, categoryDAO.getCategoryById(categoryId), price);
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
     }
 }

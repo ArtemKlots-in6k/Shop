@@ -6,7 +6,11 @@ import entity.User;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.*;
 import java.sql.Date;
@@ -16,42 +20,30 @@ import java.util.*;
 /**
  * Created by Artem Klots on 7/22/16.
  */
-public class BillDAO extends HibernateDAO {
+@Transactional
+@Repository
+public class BillDAO {
+
+    private SessionFactory sessionFactory;
 
     public BillDAO() {
     }
 
     public Bill create(Date date, User user)
             throws Exception {
-        try {
-            begin();
             Bill bill = new Bill(date, user);
-            getSession().save(bill);
-            commit();
+        sessionFactory.getCurrentSession().save(bill);
             return bill;
-        } catch (HibernateException e) {
-            rollback();
-            throw new Exception("Could not create bill" + e.getMessage(), e);
-        }
     }
 
     public List getAll() throws Exception {
-        try {
-            begin();
-            List result = getSession().createCriteria(Bill.class).list();
-            commit();
+        List result = sessionFactory.getCurrentSession().createCriteria(Bill.class).list();
             return result;
-        } catch (HibernateException e) {
-            rollback();
-            throw new Exception("Could not get bills ", e);
-        }
     }
 
     public Bill getBillById(int id) throws SQLException {
-        begin();
-        Criteria billCriteria = getSession().createCriteria(Bill.class);
+        Criteria billCriteria = sessionFactory.getCurrentSession().createCriteria(Bill.class);
         billCriteria.add(Restrictions.eq("id", id));
-        commit();
         return (Bill) billCriteria.uniqueResult();
     }
 
@@ -71,7 +63,7 @@ public class BillDAO extends HibernateDAO {
 //        }
 //        return result;
 
-        Query query = getSession().createQuery("" +
+        Query query = sessionFactory.getCurrentSession().createQuery("" +
                 "select new entity.subsidiary.UserBill(purchase.bill, SUM (purchase.price)) " +
                 "FROM Purchase purchase, in(purchase.bill) bill " +
                 "WHERE bill.user.id = " + id + " " +
@@ -87,5 +79,13 @@ public class BillDAO extends HibernateDAO {
         int userId = result.getInt("user_id");
 //        return new Bill(date, new UserDao().getUserById(userId)); // TODO: 7/25/16 починить
         return new Bill(date, new UserDao().getUserById(userId));
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
     }
 }

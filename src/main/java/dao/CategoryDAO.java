@@ -5,7 +5,11 @@ import entity.Item;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.*;
 import java.sql.Date;
@@ -16,29 +20,26 @@ import java.util.*;
 /**
  * Created by Artem Klots on 7/21/16.
  */
-public class CategoryDAO extends HibernateDAO {
+@Transactional
+@Repository
+public class CategoryDAO {
 
-    public CategoryDAO() {
-    }
+    private SessionFactory sessionFactory;
 
     public Category getCategoryById(int id) throws SQLException {
-        begin();
-        Criteria categotiesCriteria = getSession().createCriteria(Category.class);
-        categotiesCriteria.add(Restrictions.eq("id", id));
-        commit();
-        return (Category) categotiesCriteria.uniqueResult();
+        Criteria categoriesCriteria = sessionFactory.getCurrentSession().createCriteria(Category.class);
+        categoriesCriteria.add(Restrictions.eq("id", id));
+        return (Category) categoriesCriteria.uniqueResult();
     }
 
     public Category getCategoryByTitle(String title) throws SQLException {
-        begin();
-        Criteria categotiesCriteria = getSession().createCriteria(Category.class);
-        categotiesCriteria.add(Restrictions.eq("title", title));
-        commit();
-        return (Category) categotiesCriteria.uniqueResult();
+        Criteria categoriesCriteria = sessionFactory.getCurrentSession().createCriteria(Category.class);
+        categoriesCriteria.add(Restrictions.eq("title", title));
+        return (Category) categoriesCriteria.uniqueResult();
     }
 
     public List getTopThreeItemsInCategory(String categoryTitle, Date today, Date twoMonthAgo) throws SQLException {
-        Query query = getSession().createQuery("" +
+        Query query = sessionFactory.getCurrentSession().createQuery("" +
                         "SELECT new entity.subsidiary.Top3(purchases.item,  COUNT(purchases.item.id)) " +
                         "FROM Purchase purchases " +
                         "WHERE purchases.item.category.title = :categoryTitle " +
@@ -55,19 +56,12 @@ public class CategoryDAO extends HibernateDAO {
     }
 
     public List getAll() throws Exception {
-        try {
-            begin();
-            List result = getSession().createCriteria(Category.class).list();
-            commit();
+        List result = sessionFactory.getCurrentSession().createCriteria(Category.class).list();
             return result;
-        } catch (HibernateException e) {
-            rollback();
-            throw new Exception("Could not get category ", e);
-        }
     }
 
     public List getAllCategoriesWithCountedProducts() throws SQLException {
-        Query query = getSession().createQuery("" +
+        Query query = sessionFactory.getCurrentSession().createQuery("" +
                 "SELECT new entity.subsidiary.CategoryStatistic(categories.id, categories.title,  COUNT(items.category)) " +
                 "FROM Category categories, Item items " +
                 "WHERE categories.id = items.category.id " +
@@ -79,5 +73,13 @@ public class CategoryDAO extends HibernateDAO {
         int id = result.getInt("id");
         String title = result.getString("title");
         return new Category(id, title);
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
     }
 }

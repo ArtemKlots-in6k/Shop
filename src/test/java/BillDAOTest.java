@@ -20,13 +20,11 @@ import static org.junit.Assert.assertThat;
  * Created by Artem Klots on 7/22/16.
  */
 public class BillDAOTest extends DatabaseInitializer {
-    BillDAO billDAO;
 
     @Before
     public void setUp() throws Exception {
         prepareConnection();
         super.setUp();
-        billDAO = new BillDAO();
     }
 
     @After
@@ -73,7 +71,7 @@ public class BillDAOTest extends DatabaseInitializer {
                 new Bill(Date.valueOf(LocalDate.of(2016, 7, 25)), new User(1, "John"))
         );
 
-        billDAO.create(Date.valueOf(LocalDate.of(2016, 7, 25)), new UserDao().getUserById(1));
+        billDAO.create(Date.valueOf(LocalDate.of(2016, 7, 25)), userDao.getUserById(1));
 
         assertThat(billDAO.getAll(), is(expected));
     }

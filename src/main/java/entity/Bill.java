@@ -37,7 +37,7 @@ public class Bill {
         this.id = id;
     }
 
-    @Column(unique = true)
+    @Column
     public Date getDate() {
         return date;
     }

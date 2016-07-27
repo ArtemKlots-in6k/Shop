@@ -20,7 +20,6 @@ import static org.junit.Assert.assertThat;
  * Created by employee on 7/21/16.
  */
 public class ItemDAOTest extends DatabaseInitializer {
-    private ItemDAO itemDAO;
     private Category phones = new Category(0, "Phone");
     private Category notebooks = new Category(1, "Notebook");
     private Category tablets = new Category(2, "Tablets");
@@ -30,7 +29,6 @@ public class ItemDAOTest extends DatabaseInitializer {
     public void setUp() throws Exception {
         prepareConnection();
         super.setUp();
-        itemDAO = new ItemDAO();
         expected = new ArrayList<>(asList(
                 new Item("iPhone", phones, new BigDecimal("700.00")),
                 new Item("Samsung", phones, new BigDecimal("300.50")),
@@ -69,7 +67,7 @@ public class ItemDAOTest extends DatabaseInitializer {
     public void createAndGetAll() throws Exception {
         expected.add(new Item("New Phone", phones, new BigDecimal("550.00")));
 
-        itemDAO.create("New Phone", new CategoryDAO().getCategoryById(0), new BigDecimal("550.00"));
+        itemDAO.create("New Phone", categoryDAO.getCategoryById(0), new BigDecimal("550.00"));
 
         assertThat(itemDAO.getAll(), is(expected));
     }

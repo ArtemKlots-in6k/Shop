@@ -1,9 +1,10 @@
-import dao.UserDao;
+import dao.*;
 import entity.User;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +16,11 @@ import static org.junit.Assert.assertThat;
  * Created by Artem Klots on 7/22/16.
  */
 public class UserDAOTest extends DatabaseInitializer {
-    private UserDao userDao;
 
     @Before
     public void setUp() throws Exception {
         prepareConnection();
         super.setUp();
-        userDao = new UserDao();
     }
 
     @After
@@ -53,7 +52,6 @@ public class UserDAOTest extends DatabaseInitializer {
 
     @Test
     public void getUserById() throws Exception {
-        UserDao userDao = new UserDao();
         assertThat(userDao.getUserById(1).getId(), is(1));
     }
 }

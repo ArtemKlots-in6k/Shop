@@ -1,4 +1,6 @@
 import ConnectionFactory.ConnectionFactoryImpl;
+import dao.*;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -8,8 +10,14 @@ import java.sql.Statement;
  * Created by Artem Klots on 7/22/16.
  */
 public class DatabaseInitializer {
-    Connection connection;
-    Statement statement;
+    private Connection connection;
+    private Statement statement;
+    ClassPathXmlApplicationContext applicationContext;
+    BillDAO billDAO;
+    CategoryDAO categoryDAO;
+    ItemDAO itemDAO;
+    PurchaseDAO purchaseDAO;
+    UserDao userDao;
 
     protected void setUp() throws Exception {
         prepareTables();
@@ -18,6 +26,17 @@ public class DatabaseInitializer {
         preparePurchases();
         prepareBills();
         prepareUsers();
+        beansSetUp();
+    }
+
+    private void beansSetUp() {
+        applicationContext =
+                new ClassPathXmlApplicationContext(new String[]{"config.xml"});
+        billDAO = (BillDAO) applicationContext.getBean("billDAO");
+        categoryDAO = (CategoryDAO) applicationContext.getBean("categoryDAO");
+        itemDAO = (ItemDAO) applicationContext.getBean("itemDAO");
+        purchaseDAO = (PurchaseDAO) applicationContext.getBean("purchaseDAO");
+        userDao = (UserDao) applicationContext.getBean("userDAO");
     }
 
     protected void tearDown() throws Exception {

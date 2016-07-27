@@ -9,6 +9,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -22,13 +23,10 @@ import static org.junit.Assert.assertThat;
  * Created by Artem Klots on 23.07.2016.
  */
 public class PurchaseDAOTest extends DatabaseInitializer {
-    private PurchaseDAO purchaseDAO;
-
     @Before
     public void setUp() throws Exception {
         prepareConnection();
         super.setUp();
-        purchaseDAO = new PurchaseDAO();
     }
 
     @After
@@ -41,9 +39,9 @@ public class PurchaseDAOTest extends DatabaseInitializer {
     public void getPurchaseById() throws Exception {
         Purchase expectedPurchase = new Purchase(
                 1,
-                new ItemDAO().getItemById(1),
+                itemDAO.getItemById(1),
                 new BigDecimal("350"),
-                new BillDAO().getBillById(0)
+                billDAO.getBillById(0)
         );
 
         assertThat(purchaseDAO.getPurchaseById(1), is(expectedPurchase));
@@ -53,9 +51,9 @@ public class PurchaseDAOTest extends DatabaseInitializer {
     public void getPurchaseByAnotherId() throws Exception {
         Purchase expectedPurchase = new Purchase(
                 2,
-                new ItemDAO().getItemById(2),
+                itemDAO.getItemById(2),
                 new BigDecimal("1300"),
-                new BillDAO().getBillById(0)
+                billDAO.getBillById(0)
         );
 
         assertThat(purchaseDAO.getPurchaseById(2), is(expectedPurchase));
@@ -63,7 +61,7 @@ public class PurchaseDAOTest extends DatabaseInitializer {
 
     @Test
     public void getAllPurchasesByBillId() throws Exception {
-        Bill bill = new BillDAO().getBillById(0);
+        Bill bill = billDAO.getBillById(0);
         Category phoneCategory = new Category("Phone");
         List expected = asList(
                 new Purchase(
@@ -88,7 +86,7 @@ public class PurchaseDAOTest extends DatabaseInitializer {
 
     @Test
     public void create() throws Exception {
-        Purchase newPurchase = purchaseDAO.create(new ItemDAO().getItemById(1), new BigDecimal("350"), new BillDAO().getBillById(0));
+        Purchase newPurchase = purchaseDAO.create(itemDAO.getItemById(1), new BigDecimal("350"), billDAO.getBillById(0));
         assertThat(purchaseDAO.getPurchaseById(8), is(newPurchase));
     }
 }

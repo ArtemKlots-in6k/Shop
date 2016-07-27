@@ -20,13 +20,11 @@ import java.util.*;
  * Created by Artem Klots on 7/21/16.
  */
 public class CategoryDAOTest extends DatabaseInitializer {
-    private CategoryDAO categoryDAO;
 
     @Before
     public void setUp() throws Exception {
         prepareConnection();
         super.setUp();
-        categoryDAO = new CategoryDAO();
     }
 
     @After

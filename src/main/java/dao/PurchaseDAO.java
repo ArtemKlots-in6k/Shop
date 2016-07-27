@@ -8,7 +8,11 @@ import entity.User;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.sql.*;
@@ -18,30 +22,24 @@ import java.util.List;
 /**
  * Created by Artem Klots on 7/22/16.
  */
-public class PurchaseDAO extends HibernateDAO {
+@Transactional
+@Repository
+public class PurchaseDAO {
+
+    private SessionFactory sessionFactory;
 
     public PurchaseDAO() {
     }
 
-    public Purchase create(Item item, BigDecimal price, Bill bill)
-            throws Exception {
-        try {
-            begin();
+    public Purchase create(Item item, BigDecimal price, Bill bill) throws Exception {
             Purchase purchase = new Purchase(item, price, bill);
-            getSession().save(purchase);
-            commit();
+        sessionFactory.getCurrentSession().save(purchase);
             return purchase;
-        } catch (HibernateException e) {
-            rollback();
-            throw new Exception("Could not create purchase" + e.getMessage(), e);
-        }
     }
 
     public Purchase getPurchaseById(int id) throws SQLException {
-        begin();
-        Criteria purchaseCriteria = getSession().createCriteria(Purchase.class);
+        Criteria purchaseCriteria = sessionFactory.getCurrentSession().createCriteria(Purchase.class);
         purchaseCriteria.add(Restrictions.eq("id", id));
-        commit();
         return (Purchase) purchaseCriteria.uniqueResult();
     }
 
@@ -53,7 +51,7 @@ public class PurchaseDAO extends HibernateDAO {
 //            purchases.add(parse(result));
 //        }
 //        return purchases;
-        Query query = getSession().createQuery(
+        Query query = sessionFactory.getCurrentSession().createQuery(
                 "FROM Purchase purchases " +
                         "WHERE purchases.bill.id = " + id);
         return query.list();
@@ -65,5 +63,13 @@ public class PurchaseDAO extends HibernateDAO {
         BigDecimal price = result.getBigDecimal("price");
         int billId = result.getInt("bill_id");
         return new Purchase(id, new ItemDAO().getItemById(itemId), price, new BillDAO().getBillById(billId));
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
     }
 }

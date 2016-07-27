@@ -12,7 +12,7 @@ import org.hibernate.cfg.AnnotationConfiguration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class HibernateDAO {
+public abstract class HibernateDAO {
     private static final Logger log = Logger.getAnonymousLogger();
     private static final ThreadLocal session = new ThreadLocal();
     private static final SessionFactory sessionFactory =
