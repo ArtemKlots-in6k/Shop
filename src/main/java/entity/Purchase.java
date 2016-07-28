@@ -81,6 +81,6 @@ public class Purchase {
 
         return item.equals(purchase.item)
                 && price.equals(purchase.price)
-                && bill == purchase.bill;
+                && bill.equals(purchase.bill);
     }
 }
