@@ -7,7 +7,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
@@ -18,7 +17,6 @@ import java.util.List;
  * Created by Artem Klots on 7/22/16.
  */
 @Transactional
-@Repository
 public class PurchaseDAO {
 
     private SessionFactory sessionFactory;

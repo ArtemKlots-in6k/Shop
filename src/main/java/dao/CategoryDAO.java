@@ -5,7 +5,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.*;
@@ -16,7 +15,6 @@ import java.util.*;
  * Created by Artem Klots on 7/21/16.
  */
 @Transactional
-@Repository
 public class CategoryDAO {
 
     private SessionFactory sessionFactory;

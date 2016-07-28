@@ -10,9 +10,8 @@ import java.sql.Statement;
  * Created by Artem Klots on 7/22/16.
  */
 public class DatabaseInitializer {
-    private Connection connection;
     private Statement statement;
-    ClassPathXmlApplicationContext applicationContext;
+    private ClassPathXmlApplicationContext applicationContext;
     BillDAO billDAO;
     CategoryDAO categoryDAO;
     ItemDAO itemDAO;
@@ -48,7 +47,7 @@ public class DatabaseInitializer {
     }
 
     protected void prepareConnection() throws SQLException {
-        connection = new ConnectionFactoryImpl().getConnection();
+        Connection connection = new ConnectionFactoryImpl().getConnection();
         statement = connection.createStatement();
     }
 

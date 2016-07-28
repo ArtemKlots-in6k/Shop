@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Arrays.asList;
@@ -57,7 +58,7 @@ public class PurchaseDAOTest extends DatabaseInitializer {
     public void getAllPurchasesByBillId() throws Exception {
         Bill bill = billDAO.getBillById(0);
         Category phoneCategory = new Category("Phone");
-        List expected = asList(
+        List expected = new ArrayList<>(asList(
                 new Purchase(
                         0,
                         new Item(0, "iPhone", phoneCategory, new BigDecimal("700.00")),
@@ -78,7 +79,7 @@ public class PurchaseDAOTest extends DatabaseInitializer {
                         new Item(1, "Samsung", phoneCategory, new BigDecimal("300.50")),
                         new BigDecimal(400),
                         bill)
-        );
+        ));
         assertThat(purchaseDAO.getAllPurchasesByBillId(0), is(expected));
     }
 

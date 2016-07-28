@@ -39,7 +39,7 @@ public class Purchase {
         this.id = id;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "item_id")
     public Item getItem() {
         return item;
