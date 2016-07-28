@@ -58,7 +58,7 @@ public class Purchase {
         this.price = price;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "bill_id")
     public Bill getBill() {
         return bill;

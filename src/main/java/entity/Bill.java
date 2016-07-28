@@ -2,7 +2,6 @@ package entity;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.time.LocalDate;
 
 /**
  * Created by Artem Klots on 7/22/16.

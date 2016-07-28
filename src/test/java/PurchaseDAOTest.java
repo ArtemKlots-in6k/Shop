@@ -1,18 +1,12 @@
-import dao.BillDAO;
-import dao.ItemDAO;
-import dao.PurchaseDAO;
 import entity.Bill;
 import entity.Category;
 import entity.Item;
 import entity.Purchase;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Arrays.asList;
@@ -65,19 +59,23 @@ public class PurchaseDAOTest extends DatabaseInitializer {
         Category phoneCategory = new Category("Phone");
         List expected = asList(
                 new Purchase(
-                        new Item("iPhone", phoneCategory, new BigDecimal("700.00")),
+                        0,
+                        new Item(0, "iPhone", phoneCategory, new BigDecimal("700.00")),
                         new BigDecimal(750),
                         bill),
                 new Purchase(
-                        new Item("Samsung", phoneCategory, new BigDecimal("300.50")),
+                        1,
+                        new Item(1, "Samsung", phoneCategory, new BigDecimal("300.50")),
                         new BigDecimal(350),
                         bill),
                 new Purchase(
-                        new Item("Lenovo", phoneCategory, new BigDecimal("400.50")),
+                        2,
+                        new Item(2, "Lenovo", phoneCategory, new BigDecimal("400.50")),
                         new BigDecimal(1300.00),
                         bill),
                 new Purchase(
-                        new Item("Samsung", phoneCategory, new BigDecimal("300.50")),
+                        7,
+                        new Item(1, "Samsung", phoneCategory, new BigDecimal("300.50")),
                         new BigDecimal(400),
                         bill)
         );

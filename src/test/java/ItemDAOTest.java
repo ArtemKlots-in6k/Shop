@@ -1,10 +1,7 @@
-import dao.CategoryDAO;
-import dao.ItemDAO;
 import entity.Category;
 import entity.Item;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -13,7 +10,6 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertThat;
 
 /**

@@ -1,21 +1,13 @@
 package dao;
 
-import ConnectionFactory.ConnectionFactoryImpl;
 import entity.User;
 import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -39,8 +31,7 @@ public class UserDao {
     public User getUserByName(String username) throws Exception {
         Query q = sessionFactory.getCurrentSession().createQuery("from User where name = :username");
             q.setString("username", username);
-            User user = (User) q.uniqueResult();
-            return user;
+        return (User) q.uniqueResult();
     }
 
     public User getUserById(int id) throws Exception {
@@ -50,14 +41,7 @@ public class UserDao {
     }
 
     public List getAll() throws Exception {
-        List result = sessionFactory.getCurrentSession().createCriteria(User.class).list();
-            return result;
-    }
-
-    public User parse(ResultSet result) throws SQLException {
-        int id = result.getInt("id");
-        String name = result.getString("name");
-        return new User(id, name);
+        return sessionFactory.getCurrentSession().createCriteria(User.class).list();
     }
 
     public void setSessionFactory(SessionFactory sessionFactory) {

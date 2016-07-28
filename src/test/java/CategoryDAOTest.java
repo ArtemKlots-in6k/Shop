@@ -1,4 +1,3 @@
-import dao.CategoryDAO;
 import entity.Category;
 import entity.subsidiary.CategoryStatistic;
 import entity.Item;
